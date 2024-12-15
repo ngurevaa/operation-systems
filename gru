@@ -1,0 +1,50 @@
+#!/usr/bin/python3
+import os
+import sys
+import time
+import random
+
+if (len(sys.argv) < 2):
+    print('Enter positive integer.')
+    os._exit(1)
+
+n = sys.argv[1]
+
+if (n.isdigit() == 0):
+    print('Enter positive integer.')
+    os._exit(1)
+
+n = int(n)
+
+if (n <= 0):
+    print('Enter positive integer.')
+    os._exit(1)
+
+gru_pid = os.getpid()
+child_pids = []
+
+for i in range(n):
+	child_pid = os.fork()
+	if child_pid == 0:
+		os.execve('./minion', ['./minion', str(random.randint(5, 10))], os.environ)
+		os._exit(1)
+	else:
+		child_pids.append(child_pid)
+		print(f"Gru[{gru_pid}]: process created. PID {child_pid}.")
+
+for child_pid in child_pids:
+	pid, status = os.wait()
+	status = os.WEXITSTATUS(status)
+
+	print(f"Gru[{gru_pid}]: process terminated. PID {pid}. Exit status {status}.")
+
+	if (status == 1):
+		pid = os.fork()
+		if (pid == 0):
+			os.execve('./minion', ['./minion', str(random.randint(5, 10))], os.environ)
+			os._exit(1)
+		else:
+			child_pids.append(child_pid)
+			print(f"Gru[{gru_pid}]: process created. PID {pid}.")
+
+os._exit(0)

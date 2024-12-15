@@ -1,0 +1,30 @@
+#!/usr/bin/python3
+
+import sys
+import os
+import time
+import random
+
+minion_pid = os.getpid()
+gru_pid = os.getppid()
+
+print(f'Minion[{minion_pid}]: created. Parent PID {gru_pid}.')
+
+if (len(sys.argv) < 2):
+	print('Enter a number from 5 to 10.')
+
+s = sys.argv[1]
+
+if (s.isdigit() == 0):
+	print('Enter a number from 5 to 10.')
+
+s = int(s)
+if (s < 5 or s > 10):
+	print('Enter a number from 5 to 10.')
+
+time.sleep(s)
+
+status = random.randint(0, 1)
+
+print(f'Child[{minion_pid}]: before terminated. Parent PID {gru_pid}. Exit status {status}.')
+os._exit(status)
