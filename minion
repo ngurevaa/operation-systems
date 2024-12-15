@@ -27,4 +27,5 @@ time.sleep(s)
 status = random.randint(0, 1)
 
 print(f'Child[{minion_pid}]: before terminated. Parent PID {gru_pid}. Exit status {status}.')
+sys.stdout.flush()
 os._exit(status)
