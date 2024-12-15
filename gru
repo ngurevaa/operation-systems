@@ -5,20 +5,20 @@ import time
 import random
 
 if (len(sys.argv) < 2):
-    print('Enter positive integer.')
-    os._exit(1)
+	print('Enter positive integer.')
+	os._exit(1)
 
 n = sys.argv[1]
 
 if (n.isdigit() == 0):
-    print('Enter positive integer.')
-    os._exit(1)
+	print('Enter positive integer.')
+	os._exit(1)
 
 n = int(n)
 
 if (n <= 0):
-    print('Enter positive integer.')
-    os._exit(1)
+	print('Enter positive integer.')
+	os._exit(1)
 
 gru_pid = os.getpid()
 child_pids = []
